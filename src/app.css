@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* Define custom theme colors and configuration */
+@theme {
+	/* Brand colors */
+	--color-brand-red: #F22B29;
+	--color-brand-red-dark: #F22B29;
+	--color-brand-red-light: #F22B29;
+	
+	--color-brand-black: #140F2D;
+	--color-brand-black-dark: #140F2D;
+	
+	/* Neutral grays */
+	--color-neutral-50: #F9FAFB;
+	--color-neutral-100: #F3F4F6;
+	--color-neutral-200: #E5E7EB;
+	--color-neutral-300: #D1D5DB;
+	--color-neutral-400: #9CA3AF;
+	--color-neutral-500: #6B7280;
+	--color-neutral-600: #4B5563;
+	--color-neutral-700: #374151;
+	--color-neutral-800: #1F2937;
+	--color-neutral-900: #111827;
+	
+	/* Accent blues */
+	--color-accent-blue: #2563EB;
+	--color-accent-blue-light: #DBEAFE;
+	--color-accent-blue-dark: #1D4ED8;
+	
+	/* Success */
+	--color-success-green: #10B981;
+	--color-success-green-light: #D1FAE5;
+	
+	/* Warning */
+	--color-warning-amber: #F59E0B;
+	--color-warning-amber-light: #FEF3C7;
+	
+	/* Error */
+	--color-error-red: #F22B29;
+	--color-error-red-light: #FEE2E2;
+	
+	/* Font families */
+	--font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--font-display: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Base typography styles for professional appearance */
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		@apply bg-white font-sans antialiased text-neutral-800 text-[17px] md:text-[18px] leading-relaxed;
+	}
+
+	h1 {
+		@apply font-extrabold text-shadow-white leading-tight text-4xl sm:text-5xl md:text-6xl;
+	}
+
+	h2 {
+		@apply font-bold text-shadow-white leading-snug text-3xl sm:text-4xl;
+	}
+
+	h3 {
+		@apply font-semibold text-white leading-snug text-2xl sm:text-3xl;
+	}
+
+	h4 {
+		@apply font-semibold text-brand-black text-xl sm:text-2xl;
+	}
+
+	h5 {
+		@apply font-semibold text-brand-black text-lg sm:text-xl;
+	}
+
+	h6 {
+		@apply font-semibold text-brand-black text-base sm:text-lg;
+	}
+
+	p {
+		@apply text-neutral-700 leading-relaxed text-[17px] md:text-lg;
+	}
+
+	a {
+		@apply transition-colors duration-200 ease-in-out;
+	}
+}
+
+/* Component layer for reusable patterns */
+@layer components {
+	/* Primary Button */
+	.btn-primary {
+		@apply inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-brand-red rounded-lg hover:bg-brand-red-dark transition-all duration-200 ease-in-out shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed;
+	}
+
+	/* Secondary Button */
+	.btn-secondary {
+		@apply inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-brand-black border-2 border-brand-black rounded-lg hover:bg-neutral-100 transition-all duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed;
+	}
+
+	/* Tertiary Button (Link style) */
+	.btn-tertiary {
+		@apply inline-flex items-center justify-center px-4 py-2 text-base font-semibold text-brand-red hover:text-brand-red-dark transition-colors duration-200;
+	}
+
+	/* Card component */
+	.card {
+		@apply bg-white rounded-xl border border-neutral-200 overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg;
+	}
+
+	/* Container with max-width */
+	.container-md {
+		@apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+	}
+
+	/* Section padding */
+	.section-py {
+		@apply py-16 sm:py-24 lg:py-32;
+	}
+
+	/* Badge styles */
+	
+}
+
+/* Utility classes for performance optimization */
+@layer utilities {
+	.safe-area-inset {
+		padding-left: max(1rem, env(safe-area-inset-left));
+		padding-right: max(1rem, env(safe-area-inset-right));
+	}
+
+	/* Text utilities */
+	.text-truncate {
+		@apply truncate;
+	}
+
+	.text-clamp-2 {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.text-clamp-3 {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	/* Flex utilities */
+	.flex-center {
+		@apply flex items-center justify-center;
+	}
+
+	.flex-between {
+		@apply flex items-center justify-between;
+	}
+
+	/* Responsive image utility */
+	.img-responsive {
+		@apply max-w-full h-auto;
+	}
+}

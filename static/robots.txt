@@ -1,0 +1,27 @@
+# Techgetafrica robots.txt
+# Allows search engines to crawl all pages except private areas
+
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /.next/
+Disallow: /node_modules/
+
+# Sitemap
+Sitemap: https://techgetafrica.com/sitemap.xml
+
+# Specific rules for common bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Slow down aggressive crawlers
+User-agent: MJ12bot
+Crawl-delay: 10
+
+User-agent: AhrefsBot
+Crawl-delay: 10
