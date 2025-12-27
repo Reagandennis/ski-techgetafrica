@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Hero from '$lib/components/Hero.svelte';
+	import { flatCourses } from '$lib/data/courses';
 
 	// Mock data - will be replaced with API calls
 	const roadmaps = [
@@ -29,7 +30,7 @@
 				'Certify: Azure DP-203 or Databricks Data Engineer Associate',
 				'Grow: ML pipelines, MLOps, and model monitoring'
 			],
-			cta: '/certifications/data-ai-engineer'
+			cta: '/certifications/data-ai'
 		},
 		{
 			id: 'cybersecurity',
@@ -43,7 +44,7 @@
 				'Certify: CompTIA Security+ or ISC2 CC',
 				'Grow: SOC analysis, incident playbooks, and cloud security labs'
 			],
-			cta: '/certifications/cybersecurity-analyst'
+			cta: '/certifications/cybersecurity'
 		},
 		{
 			id: 'devops',
@@ -57,7 +58,7 @@
 				'Certify: AWS DevOps Pro or Azure DevOps Engineer',
 				'Grow: Kubernetes (CKA), IaC, and SRE incident drills'
 			],
-			cta: '/certifications/devops-engineer'
+			cta: '/certifications/devops'
 		}
 	];
 
@@ -69,6 +70,28 @@
 		{ name: 'Cybersecurity', image: '/categories/cyber-security.png', count: 31 },
 		{ name: 'AI & Machine Learning', image: '/categories/artificial-intelligence.png', count: 23 }
 	];
+
+	// Calculate actual course counts for each category
+	const getCategoryCounts = () => {
+		const categoryMapping: Record<string, string> = {
+			'Cloud Computing': 'Cloud Computing & DevOps',
+			'Data Science': 'Data Science & Artificial Intelligence',
+			'Software Engineering': 'Software Development & Programming',
+			'Information Technology': 'Networking & IT Infrastructure',
+			'Cybersecurity': 'Cybersecurity',
+			'AI & Machine Learning': 'Data Science & Artificial Intelligence'
+		};
+
+		return categories.map(category => {
+			const actualCategoryName = categoryMapping[category.name];
+			const count = actualCategoryName 
+				? flatCourses.filter(course => course.category === actualCategoryName).length
+				: 0;
+			return { ...category, count };
+		});
+	};
+
+	const categoriesWithCounts = getCategoryCounts();
 
 	// Updated Partners / Alumni Employers to build real trust
     // NOTE: Ensure you have these logos in your static folder or use generic placeholders
@@ -313,9 +336,9 @@
 		</div>
 
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-			{#each categories as category (category.name)}
+			{#each categoriesWithCounts as category (category.name)}
 				<a
-					href={`/certifications?category=${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+					href={`/courses?category=${category.name.toLowerCase().replace(/\s+/g, '-')}`}
 					class="flex flex-col items-center p-8 bg-gray-50 rounded-xl border border-transparent hover:border-red-200 hover:bg-white hover:shadow-lg transition-all duration-300 group"
 				>
 					<div

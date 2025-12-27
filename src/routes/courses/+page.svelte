@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CourseCard from '$lib/components/CourseCard.svelte';
 	import type { PageData } from './$types';
+	import { page } from '$app/stores';
 
 	let { data }: { data: PageData } = $props();
 
@@ -13,12 +14,33 @@
 	let searchQuery = $state('');
 	let selectedDifficulty = $state('all');
 	let selectedRating = $state('all');
+	let selectedCategory = $state('all');
 
 	// Pagination
 	let currentPage = $state(1);
 	let itemsPerPage = 12;
 
 	const difficulties = ['all', 'Beginner', 'Intermediate', 'Advanced'];
+
+	// Initialize filters from URL params
+	$effect(() => {
+		const urlParams = $page.url.searchParams;
+		const categoryParam = urlParams.get('category');
+		if (categoryParam) {
+			// Map homepage category names to actual course category names
+			const categoryMapping: Record<string, string> = {
+				'cloud-computing': 'Cloud Computing & DevOps',
+				'data-science': 'Data Science & Artificial Intelligence',
+				'software-engineering': 'Software Development & Programming',
+				'information-technology': 'Networking & IT Infrastructure',
+				'cybersecurity': 'Cybersecurity',
+				'ai-&-machine-learning': 'Data Science & Artificial Intelligence'
+			};
+			
+			const mappedCategory = categoryMapping[categoryParam] || categoryParam;
+			selectedCategory = mappedCategory;
+		}
+	});
 
 	// Apply filters
 	function applyFilters() {
@@ -34,6 +56,11 @@
 					c.description?.toLowerCase().includes(query) ||
 					c.category?.toLowerCase().includes(query)
 			);
+		}
+
+		// Category filter
+		if (selectedCategory !== 'all') {
+			filtered = filtered.filter((c) => c.category === selectedCategory);
 		}
 
 		// Difficulty filter
@@ -120,6 +147,48 @@
 						/>
 					</div>
 
+					<!-- Category Filter -->
+					<div>
+						<label class="block text-sm font-semibold text-brand-black mb-3">
+							Category
+						</label>
+						<div class="space-y-2">
+							<label class="flex items-center gap-3 cursor-pointer">
+								<input
+									type="radio"
+									name="category"
+									value="all"
+									bind:group={selectedCategory}
+									class="w-4 h-4"
+								/>
+								<span class="text-sm text-neutral-700">All Categories</span>
+							</label>
+							{#each [
+								'Software Development & Programming',
+								'Cloud Computing & DevOps',
+								'Data Science & Artificial Intelligence',
+								'Cybersecurity',
+								'Networking & IT Infrastructure',
+								'UI/UX Design & Product Design',
+								'Blockchain & Web3 Development',
+								'Creative Tech & Multimedia',
+								'Tech Business & Digital Marketing',
+								'Game Development & XR Technologies'
+							] as category (category)}
+								<label class="flex items-center gap-3 cursor-pointer">
+									<input
+										type="radio"
+										name="category"
+										value={category}
+										bind:group={selectedCategory}
+										class="w-4 h-4"
+									/>
+									<span class="text-sm text-neutral-700">{category}</span>
+								</label>
+							{/each}
+						</div>
+					</div>
+
 					<!-- Difficulty Filter -->
 					<div>
 						<label class="block text-sm font-semibold text-brand-black mb-3">
@@ -173,6 +242,7 @@
 						class="btn-secondary w-full"
 						onclick={() => {
 							searchQuery = '';
+							selectedCategory = 'all';
 							selectedDifficulty = 'all';
 							selectedRating = 'all';
 						}}
@@ -220,6 +290,7 @@
 							class="btn-primary"
 							onclick={() => {
 								searchQuery = '';
+								selectedCategory = 'all';
 								selectedDifficulty = 'all';
 								selectedRating = 'all';
 							}}

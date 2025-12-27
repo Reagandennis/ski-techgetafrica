@@ -13,7 +13,7 @@
 		title = 'Master Technology. Shape Your Future.',
 		subtitle = 'Professional Certifications for African Tech Leaders',
 		description = 'Techgetafrica empowers African professionals with world-class technology certifications. Learn from industry experts, earn professional credentials, and advance your career with proven skills.',
-		ctaText = 'Explore Courses',
+		ctaText = 'Explore Certifications',
 		ctaSecondaryText = 'Watch Demo',
 		backgroundImageUrl = '/logo.png',
 		showLogo = true,
@@ -25,10 +25,10 @@
 	<!-- Decorative background elements -->
 	<div
 		class="absolute top-0 right-0 w-96 h-96 bg-brand-red opacity-5 rounded-full blur-3xl -mr-48 -mt-48"
-	/>
+	></div>
 	<div
 		class="absolute bottom-0 left-0 w-96 h-96 bg-accent-blue opacity-5 rounded-full blur-3xl -ml-48 -mb-48"
-	/>
+	></div>
 
 	<!-- Main content -->
 	<div class="container-md py-20 sm:py-28 lg:py-32 relative z-10">
@@ -115,30 +115,30 @@
 
 				<!-- CTA Buttons -->
 				<div class="flex flex-col sm:flex-row gap-4 pt-8">
-					<button class="btn-primary text-lg px-8 py-4 flex-shrink-0">
+					<a href="/courses" class="btn-primary text-lg px-8 py-4 flex-shrink-0 text-center">
 						{ctaText}
-					</button>
-					<button class="btn-secondary text-lg px-8 py-4 flex items-center justify-center gap-2">
+					</a>
+					<a href="https://www.youtube.com/@TechGetAfrica" target="_blank" rel="noopener noreferrer" class="btn-secondary text-lg px-8 py-4 flex items-center justify-center gap-2">
 						<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
 							<path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
 						</svg>
 						{ctaSecondaryText}
-					</button>
+					</a>
 				</div>
 
 				<!-- Stats -->
 				<div class="grid grid-cols-3 gap-6 pt-12 border-t border-neutral-200">
 					<div>
-						<p class="text-3xl font-bold text-brand-red">50K+</p>
-						<p class="text-sm text-neutral-600 mt-1">Active Learners</p>
+						<p class="text-3xl font-bold text-brand-red">10+</p>
+						<p class="text-sm text-neutral-600 mt-1">Active Partners</p>
 					</div>
 					<div>
 						<p class="text-3xl font-bold text-brand-red">200+</p>
-						<p class="text-sm text-neutral-600 mt-1">Courses</p>
+						<p class="text-sm text-neutral-600 mt-1">Certifications</p>
 					</div>
 					<div>
 						<p class="text-3xl font-bold text-brand-red">95%</p>
-						<p class="text-sm text-neutral-600 mt-1">Satisfaction</p>
+						<p class="text-sm text-neutral-600 mt-1">Garanteed Satisfaction</p>
 					</div>
 				</div>
 			</div>
@@ -153,7 +153,7 @@
 					/>
 				{:else}
 					<!-- Placeholder illustration -->
-					<div class="w-full max-w-md aspect-square bg-gradient-to-br from-brand-red to-accent-blue rounded-2xl opacity-10" />
+					<div class="w-full max-w-md aspect-square bg-gradient-to-br from-brand-red to-accent-blue rounded-2xl opacity-10"></div>
 					<div class="absolute inset-0 flex items-center justify-center">
 						<svg class="w-64 h-64 text-brand-red opacity-20" fill="currentColor" viewBox="0 0 24 24">
 							<path
@@ -168,7 +168,7 @@
 					class="absolute top-12 -left-6 bg-white rounded-xl p-6 shadow-lg border border-neutral-200 max-w-xs"
 				>
 					<div class="flex items-center gap-3 mb-3">
-						<div class="w-3 h-3 bg-brand-red rounded-full" />
+						<div class="w-3 h-3 bg-brand-red rounded-full"></div>
 						<span class="text-sm font-semibold text-brand-black">Trending Now</span>
 					</div>
 					<p class="text-sm font-medium text-neutral-800">

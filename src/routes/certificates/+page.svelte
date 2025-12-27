@@ -1,4 +1,5 @@
 <script lang="ts">
+	import techgetafricaLogo from '$lib/assets/TECHGETAFRICA (Facebook Post).png';
 	const certificationTypes = [
 		{
 			id: 'professional',
@@ -54,7 +55,7 @@
 			duration: '3-6 months',
 			enrolledCount: 12500,
 			rating: 4.8,
-			imageUrl: 'https://via.placeholder.com/400x250/4285F4/ffffff?text=Google+Cloud+Architect',
+			imageUrl: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&h=250&fit=crop&q=80&fm=jpg',
 			price: 299,
 			benefits: ['Globally recognized', 'Hands-on labs', 'Career support'],
 		},
@@ -68,7 +69,7 @@
 			duration: '2-4 months',
 			enrolledCount: 18200,
 			rating: 4.9,
-			imageUrl: 'https://via.placeholder.com/400x250/FF9900/ffffff?text=AWS+Solutions+Architect',
+			imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop&q=80&fm=jpg',
 			price: 349,
 			benefits: ['Industry standard', 'Practice exams', 'Job placement'],
 		},
@@ -82,7 +83,7 @@
 			duration: '2-3 months',
 			enrolledCount: 9800,
 			rating: 4.7,
-			imageUrl: 'https://via.placeholder.com/400x250/0078D4/ffffff?text=Azure+Administrator',
+			imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop&q=80&fm=jpg',
 			price: 279,
 			benefits: ['Official curriculum', 'Virtual labs', 'Certification prep'],
 		},
@@ -96,7 +97,7 @@
 			duration: '3-4 months',
 			enrolledCount: 6700,
 			rating: 4.8,
-			imageUrl: 'https://via.placeholder.com/400x250/326CE5/ffffff?text=Kubernetes+Admin',
+			imageUrl: 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=400&h=250&fit=crop&q=80&fm=jpg',
 			price: 395,
 			benefits: ['Performance-based', 'Hands-on exam', 'High demand'],
 		},
@@ -110,7 +111,7 @@
 			duration: '2-3 months',
 			enrolledCount: 14300,
 			rating: 4.6,
-			imageUrl: 'https://via.placeholder.com/400x250/EE3124/ffffff?text=Security+Plus',
+			imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=250&fit=crop&q=80&fm=jpg',
 			price: 249,
 			benefits: ['Entry-level friendly', 'Industry baseline', 'Vendor neutral'],
 		},
@@ -124,7 +125,7 @@
 			duration: '3-5 months',
 			enrolledCount: 11200,
 			rating: 4.7,
-			imageUrl: 'https://via.placeholder.com/400x250/1BA0D7/ffffff?text=CCNA',
+			imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop&q=80&fm=jpg',
 			price: 325,
 			benefits: ['Networking foundation', 'Lab simulations', 'Global recognition'],
 		},
@@ -279,12 +280,16 @@
 		<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{#each featuredCertifications as cert}
 				<div class="card hover:border-brand-red transition-all duration-300 group overflow-hidden">
-					<div class="overflow-hidden">
+					<div class="overflow-hidden relative">
 						<img
 							src={cert.imageUrl}
 							alt={cert.title}
 							class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
 						/>
+						<!-- Techgetafrica Logo -->
+						<div class="absolute top-3 left-3 w-8 h-8 bg-white/10 backdrop-blur-sm rounded-full p-1 border border-white/20">
+							<img src={techgetafricaLogo} alt="Techgetafrica" class="w-full h-full object-contain rounded-full" />
+						</div>
 					</div>
 					
 					<div class="p-6">

@@ -1,6 +1,7 @@
 
 <script lang="ts">
 	import { formatCurrency } from '$lib/utils/format';
+	import techgetafricaLogo from '$lib/assets/TECHGETAFRICA (Facebook Post).png';
 	interface CourseCardProps {
 		id: string;
 		title: string;
@@ -54,40 +55,48 @@
 <a {href} class="block group">
 	<div class="card overflow-hidden flex flex-col h-full bg-white">
 		<!-- Course Image -->
-		{#if imageUrl}
-			<div class="relative w-full h-48 overflow-hidden bg-neutral-200">
-				<img
-					src={imageUrl}
-					alt={title}
-					class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-				/>
-				<!-- Difficulty Badge -->
-				{#if difficulty}
-						<div class="absolute top-3 right-3">
-							<span
-								class="badge badge-neutral text-xs font-semibold {difficulty === 'Beginner'
-									? 'bg-success-green-light text-green-800'
-									: difficulty === 'Intermediate'
-										? 'bg-warning-amber-light text-amber-800'
-										: 'bg-error-red-light text-red-800'}"
-							>
-								{difficulty}
-							</span>
-						</div>
-				{/if}
-			</div>
-		{:else}
-			<div class="w-full h-48 bg-gradient-to-br from-neutral-100 to-neutral-200 flex-center">
-				<svg class="w-16 h-16 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="1.5"
-						d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+		<div class="relative w-full h-48 overflow-hidden">
+			{#if imageUrl}
+				<div class="w-full h-full bg-neutral-200">
+					<img
+						src={imageUrl}
+						alt={title}
+						class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
 					/>
-				</svg>
+				</div>
+			{:else}
+				<div class="w-full h-full bg-gradient-to-br from-neutral-100 to-neutral-200 flex-center">
+					<svg class="w-16 h-16 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="1.5"
+							d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+						/>
+					</svg>
+				</div>
+			{/if}
+
+			<!-- Difficulty Badge -->
+			{#if difficulty}
+				<div class="absolute top-3 right-3">
+					<span
+						class="badge badge-neutral text-xs font-semibold {difficulty === 'Beginner'
+							? 'bg-success-green-light text-green-800'
+							: difficulty === 'Intermediate'
+								? 'bg-warning-amber-light text-amber-800'
+								: 'bg-error-red-light text-red-800'}"
+					>
+						{difficulty}
+					</span>
+				</div>
+			{/if}
+
+			<!-- Techgetafrica Logo - Always visible -->
+			<div class="absolute top-3 left-3 w-8 h-8 bg-white/10 backdrop-blur-sm rounded-full p-1 border border-white/20 z-10">
+				<img src={techgetafricaLogo} alt="Techgetafrica" class="w-full h-full object-contain rounded-full" />
 			</div>
-		{/if}
+		</div>
 
 		<!-- Card Content -->
 		<div class="flex flex-col flex-1 p-5">
@@ -158,7 +167,7 @@
 			</div>
 
 			<!-- Spacer to push rating/price to bottom -->
-			<div class="flex-1" />
+			<div class="flex-1"></div>
 
 			<!-- Rating -->
 			<div class="flex items-center gap-2 mb-4 py-3 border-t border-neutral-200">

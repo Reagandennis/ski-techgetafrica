@@ -120,7 +120,7 @@
 		</div>
 
 		<!-- Divider -->
-		<div class="border-t border-neutral-800 my-12" />
+		<div class="border-t border-neutral-800 my-12"></div>
 
 		<!-- Bottom Footer -->
 		<div class="flex flex-col sm:flex-between gap-6 text-sm text-neutral-400">
