@@ -4,6 +4,12 @@
 	import certificateIcon from '$lib/assets/Certificate.png';
 	import mentorIcon from '$lib/assets/mentor.png';
 	import careerIcon from '$lib/assets/career.png';
+	import cloudComputingIcon from '$lib/assets/cloud_computing.png';
+	import dataScienceIcon from '$lib/assets/data_science.png';
+	import softwareEngineeringIcon from '$lib/assets/software_engineering.png';
+	import informationTechnologyIcon from '$lib/assets/IT.png';
+	import cybersecurityIcon from '$lib/assets/cybersecurity.png';
+	import aiMlIcon from '$lib/assets/machine_learning.png';
 
 	// Mock data - will be replaced with API calls
 	const roadmaps = [
@@ -66,12 +72,12 @@
 	];
 
 	const categories = [
-		{ name: 'Cloud Computing', image: '/categories/cloud-computing.png', count: 45 },
-		{ name: 'Data Science', image: '/categories/data science.png', count: 38 },
-		{ name: 'Software Engineering', image: '/categories/software-engineering.png', count: 52 },
-		{ name: 'Information Technology', image: '/categories/Information technology.png', count: 28 },
-		{ name: 'Cybersecurity', image: '/categories/cyber-security.png', count: 31 },
-		{ name: 'AI & Machine Learning', image: '/categories/artificial-intelligence.png', count: 23 }
+		{ name: 'Cloud Computing', image: cloudComputingIcon, count: 45 },
+		{ name: 'Data Science', image: dataScienceIcon, count: 38 },
+		{ name: 'Software Engineering', image: softwareEngineeringIcon, count: 52 },
+		{ name: 'Information Technology', image: informationTechnologyIcon, count: 28 },
+		{ name: 'Cybersecurity', image: cybersecurityIcon, count: 31 },
+		{ name: 'AI & Machine Learning', image: aiMlIcon, count: 23 }
 	];
 
 	// Calculate actual course counts for each category
@@ -153,7 +159,7 @@
 	<div class="container mx-auto px-4 relative z-10">
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-800">
 			<div class="p-6">
-				<div class="h-14 w-14 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl shadow-lg shadow-red-900/50">
+				<div class="h-14 w-14 bg-white rounded-full flex items-center justify-center mx-auto mb-6 ring-2 ring-red-600 shadow-lg shadow-black/20">
 					<img
 						src={certificateIcon}
 						alt="Certificate"
@@ -168,7 +174,7 @@
 				</p>
 			</div>
 			<div class="p-6">
-				<div class="h-14 w-14 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl shadow-lg shadow-red-900/50">
+				<div class="h-14 w-14 bg-white rounded-full flex items-center justify-center mx-auto mb-6 ring-2 ring-red-600 shadow-lg shadow-black/20">
 					<img
 						src={mentorIcon}
 						alt="Mentor"
@@ -183,7 +189,7 @@
 				</p>
 			</div>
 			<div class="p-6">
-				<div class="h-14 w-14 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl shadow-lg shadow-red-900/50">
+				<div class="h-14 w-14 bg-white rounded-full flex items-center justify-center mx-auto mb-6 ring-2 ring-red-600 shadow-lg shadow-black/20">
 					<img
 						src={careerIcon}
 						alt="Career"
@@ -418,10 +424,10 @@
 					href={`/courses?category=${category.name.toLowerCase().replace(/\s+/g, '-')}`}
 					class="flex flex-col items-center p-8 bg-gray-50 rounded-xl border border-transparent hover:border-red-200 hover:bg-white hover:shadow-lg transition-all duration-300 group"
 				>
-					<div
-						class="mb-6 h-24 w-24 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-					>
-						<img src={category.image} alt={category.name} class="h-20 w-20 object-contain" />
+					<div class="mb-6 h-24 w-24 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+						<div class="h-20 w-20 bg-white rounded-full flex items-center justify-center ring-2 ring-red-600 shadow-md shadow-black/10">
+							<img src={category.image} alt={category.name} class="h-12 w-12 object-contain" loading="lazy" decoding="async" />
+						</div>
 					</div>
 					<h3
 						class="text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors"
