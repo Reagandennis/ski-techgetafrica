@@ -1,8 +1,14 @@
 import { json } from '@sveltejs/kit';
-import { supabase } from '$lib/supabase';
+
+type SitemapRoute = {
+	path: string;
+	priority: number;
+	changefreq: string;
+	lastmod?: string;
+};
 
 // Define all static routes in your site
-const staticRoutes = [
+const staticRoutes: SitemapRoute[] = [
 	{ path: '/', priority: 1.0, changefreq: 'daily' },
 	{ path: '/about', priority: 0.8, changefreq: 'weekly' },
 	{ path: '/accessibility', priority: 0.5, changefreq: 'yearly' },
@@ -23,16 +29,6 @@ const staticRoutes = [
 export async function GET() {
 	const baseUrl = 'https://techgetafrica.com';
 
-	// Fetch courses from Supabase
-	const { data: courses, error: coursesError } = await supabase
-		.from('courses')
-		.select('slug, updated_at')
-		.eq('published', true);
-
-	if (coursesError) {
-		console.error('Error fetching courses for sitemap:', coursesError);
-	}
-
 	// Fetch certifications (hardcoded for now, as they are in the code)
 	const certificationSlugs = ['cloud-architect', 'data-ai', 'cybersecurity', 'devops'];
 	const certificationRoutes = certificationSlugs.map((slug) => ({
@@ -43,13 +39,7 @@ export async function GET() {
 	}));
 
 	// Build dynamic routes
-	const dynamicRoutes = [
-		...(courses || []).map((course) => ({
-			path: `/courses/${course.slug}`,
-			priority: 0.8,
-			changefreq: 'weekly' as const,
-			lastmod: course.updated_at || new Date().toISOString().split('T')[0],
-		})),
+	const dynamicRoutes: SitemapRoute[] = [
 		...certificationRoutes,
 	];
 

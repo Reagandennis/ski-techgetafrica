@@ -7,7 +7,7 @@ This guide will help you complete the Supabase integration for authentication, b
 - Supabase account (https://supabase.com)
 - Project with credentials in `.env` file:
   - `PUBLIC_SUPABASE_URL`
-  - `PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`
+  - `PUBLIC_SUPABASE_ANON_KEY`
 
 ## Setup Steps
 

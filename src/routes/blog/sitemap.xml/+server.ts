@@ -1,21 +1,17 @@
-import { supabase } from '$lib/supabase';
+import { getBlogPosts, type BlogPost } from '$lib/server/contentful';
 
 export async function GET() {
 	const baseUrl = 'https://techgetafrica.com';
 
-	// Fetch published blog posts from Supabase
-	const { data: blogPosts, error } = await supabase
-		.from('blog_posts')
-		.select('slug, published_date, updated_date')
-		.eq('published', true)
-		.order('published_date', { ascending: false });
-
-	if (error || !blogPosts) {
-		console.error('Error fetching blog posts for sitemap:', error);
-		return new Response('Error generating sitemap', { status: 500 });
+	let posts: BlogPost[] = [];
+	try {
+		posts = await getBlogPosts();
+	} catch (err) {
+		console.error('Error fetching Contentful posts for blog sitemap:', err);
+		posts = [];
 	}
 
-	const blogPostRoutes = blogPosts.map((post) => ({
+	const blogPostRoutes = posts.map((post) => ({
 		path: `/blog/${post.slug}`,
 		priority: 0.8,
 		changefreq: 'weekly' as const,
@@ -28,7 +24,7 @@ export async function GET() {
 			path: '/blog',
 			priority: 0.9,
 			changefreq: 'daily' as const,
-			lastmod: blogPosts[0]?.published_date || new Date().toISOString().split('T')[0],
+			lastmod: posts[0]?.published_date || new Date().toISOString().split('T')[0],
 		},
 		...blogPostRoutes,
 	];

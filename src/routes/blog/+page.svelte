@@ -150,24 +150,27 @@
 <section class="bg-neutral-50 section-py">
 	<div class="container-md">
 		{#if data.error}
-			<!-- Database Error Message -->
+			<!-- Content loading error message -->
 			<div class="max-w-2xl mx-auto text-center py-16">
 				<svg class="w-20 h-20 text-yellow-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
 				</svg>
-				<h3 class="text-2xl font-bold text-neutral-700 mb-4">Database Not Initialized</h3>
+				<h3 class="text-2xl font-bold text-neutral-700 mb-4">Contentful Not Configured</h3>
 				<p class="text-neutral-600 mb-6">{data.error}</p>
 				<div class="bg-neutral-100 border border-neutral-300 rounded-lg p-6 text-left">
 					<p class="font-semibold text-brand-black mb-2">To fix this:</p>
 					<ol class="list-decimal list-inside space-y-2 text-sm text-neutral-700">
-						<li>Open your <a href="https://vdcwpsipktxgekqgcopr.supabase.co" target="_blank" class="text-brand-red underline">Supabase Dashboard</a></li>
-						<li>Go to <strong>SQL Editor</strong> in the left sidebar</li>
-						<li>Click <strong>New Query</strong></li>
-						<li>Copy and paste the contents of <code class="bg-neutral-200 px-2 py-1 rounded">supabase-schema.sql</code></li>
-						<li>Click <strong>Run</strong> to create tables</li>
-						<li>Create another query with <code class="bg-neutral-200 px-2 py-1 rounded">supabase-seed.sql</code></li>
-						<li>Click <strong>Run</strong> to add sample blog posts</li>
-						<li>Refresh this page</li>
+						<li>Create a <code class="bg-neutral-200 px-2 py-1 rounded">.env.local</code> file (or update it)</li>
+						<li>
+							Add these variables:
+							<ul class="list-disc list-inside ml-4 mt-1 space-y-1">
+								<li><code class="bg-neutral-200 px-2 py-1 rounded">CONTENTFUL_SPACE_ID</code></li>
+								<li><code class="bg-neutral-200 px-2 py-1 rounded">CONTENTFUL_ENVIRONMENT</code> (usually <code class="bg-neutral-200 px-2 py-1 rounded">master</code>)</li>
+								<li><code class="bg-neutral-200 px-2 py-1 rounded">CONTENTFUL_DELIVERY_ACCESS_TOKEN</code></li>
+							</ul>
+						</li>
+						<li>Restart the dev server</li>
+						<li>Ensure you have a Contentful content type with ID <code class="bg-neutral-200 px-2 py-1 rounded">blogPost</code> and fields like <code class="bg-neutral-200 px-2 py-1 rounded">title</code>, <code class="bg-neutral-200 px-2 py-1 rounded">slug</code>, <code class="bg-neutral-200 px-2 py-1 rounded">excerpt</code>, <code class="bg-neutral-200 px-2 py-1 rounded">content</code></li>
 					</ol>
 				</div>
 			</div>
@@ -180,32 +183,32 @@
 
 			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 				{#each filteredPosts as post (post.id)}
-					<article class="card overflow-hidden hover:border-brand-red transition-all duration-300 group h-full flex flex-col">
+					<article class="card overflow-hidden hover:border-brand-red/60 hover:shadow-xl transition-all duration-300 group h-full flex flex-col">
 						<!-- Cover Image -->
-						<div class="overflow-hidden h-48">
+						<div class="relative overflow-hidden h-52">
 							<img
 								src={post.cover_image}
 								alt={post.title}
 								class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
 							/>
+							<div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+							<div class="absolute left-4 top-4">
+								<span class="inline-flex items-center px-3 py-1 bg-white/90 backdrop-blur text-brand-black text-xs font-semibold rounded-full shadow-sm">
+									{post.category}
+								</span>
+							</div>
 						</div>
 
 						<!-- Content -->
 						<div class="p-6 flex flex-col flex-grow">
-							<!-- Category Badge -->
-							<div class="mb-3">
-								<span class="inline-block px-3 py-1 bg-brand-red-light text-brand-red text-xs font-semibold rounded-full">
-									{post.category}
-								</span>
-							</div>
 
 							<!-- Title -->
-							<h3 class="text-xl font-bold text-brand-black mb-3 group-hover:text-brand-red transition-colors line-clamp-2">
+							<h3 class="text-xl font-extrabold text-brand-black mb-3 group-hover:text-brand-red transition-colors line-clamp-2 tracking-tight">
 								<a href={`/blog/${post.slug}`}>{post.title}</a>
 							</h3>
 
 							<!-- Excerpt -->
-							<p class="text-neutral-600 text-sm mb-4 line-clamp-3 flex-grow">
+							<p class="text-neutral-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
 								{post.excerpt}
 							</p>
 
@@ -225,28 +228,30 @@
 								<div class="flex items-center justify-between text-xs text-neutral-600">
 									<div class="flex items-center gap-2">
 										{#if post.author_image}
-											<img src={post.author_image} alt={post.author_name} class="w-6 h-6 rounded-full" />
+											<img src={post.author_image} alt={post.author_name} class="w-7 h-7 rounded-full ring-2 ring-white shadow-sm" />
 										{:else}
-											<div class="w-6 h-6 rounded-full bg-brand-red flex items-center justify-center text-white text-xs font-bold">
+											<div class="w-7 h-7 rounded-full bg-brand-red flex items-center justify-center text-white text-xs font-bold shadow-sm">
 												{post.author_name.charAt(0).toUpperCase()}
 											</div>
 										{/if}
-										<span>{post.author_name}</span>
+										<span class="font-medium">{post.author_name}</span>
 									</div>
-									<span>{post.read_time} min read</span>
+									<span class="tabular-nums">{post.read_time} min read</span>
 								</div>
 
 								<!-- Date -->
 								<p class="text-xs text-neutral-500">
-									{new Date(post.published_date).toLocaleDateString('en-US', {
-										year: 'numeric',
-										month: 'long',
-										day: 'numeric',
-									})}
+									{post.published_date
+										? new Date(post.published_date).toLocaleDateString('en-US', {
+												year: 'numeric',
+												month: 'long',
+												day: 'numeric',
+											})
+										: 'Draft'}
 								</p>
 
 								<!-- Read More Link -->
-								<a href={`/blog/${post.slug}`} class="inline-block text-brand-red font-semibold text-sm hover:text-brand-red-dark transition-colors mt-2">
+								<a href={`/blog/${post.slug}`} class="inline-flex items-center gap-2 text-brand-red font-semibold text-sm hover:text-brand-red-dark transition-colors mt-2">
 									Read Article →
 								</a>
 							</div>

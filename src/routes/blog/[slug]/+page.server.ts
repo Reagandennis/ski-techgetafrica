@@ -1,19 +1,12 @@
-import { createServerSupabaseClient } from '$lib/server/supabase';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { getBlogPostBySlug } from '$lib/server/contentful';
 
-export const load: PageServerLoad = async ({ params, cookies }) => {
-	const supabase = createServerSupabaseClient(cookies);
+export const load: PageServerLoad = async ({ params }) => {
 	const { slug } = params;
 
-	const { data: post, error: err } = await supabase
-		.from('blog_posts')
-		.select('*')
-		.eq('slug', slug)
-		.single();
-
-	if (err || !post) {
-		console.error(`Error loading blog post with slug "${slug}":`, err);
+	const post = await getBlogPostBySlug(slug);
+	if (!post) {
 		throw error(404, 'Blog post not found');
 	}
 
