@@ -1,6 +1,9 @@
 <script lang="ts">
 	import Hero from '$lib/components/Hero.svelte';
 	import { flatCourses } from '$lib/data/courses';
+	import certificateIcon from '$lib/assets/Certificate.png';
+	import mentorIcon from '$lib/assets/mentor.png';
+	import careerIcon from '$lib/assets/career.png';
 
 	// Mock data - will be replaced with API calls
 	const roadmaps = [
@@ -151,7 +154,13 @@
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-800">
 			<div class="p-6">
 				<div class="h-14 w-14 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl shadow-lg shadow-red-900/50">
-					🎟️
+					<img
+						src={certificateIcon}
+						alt="Certificate"
+						class="h-8 w-8 object-contain"
+						loading="lazy"
+						decoding="async"
+					/>
 				</div>
 				<h3 class="text-xl font-bold mb-3">On demand Certifications</h3>
 				<p class="text-white text-sm leading-relaxed">
@@ -160,7 +169,13 @@
 			</div>
 			<div class="p-6">
 				<div class="h-14 w-14 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl shadow-lg shadow-red-900/50">
-					👨‍🏫
+					<img
+						src={mentorIcon}
+						alt="Mentor"
+						class="h-8 w-8 object-contain"
+						loading="lazy"
+						decoding="async"
+					/>
 				</div>
 				<h3 class="text-xl font-bold mb-3">On Demand Mentorship</h3>
 				<p class="text-white text-sm leading-relaxed">
@@ -169,7 +184,13 @@
 			</div>
 			<div class="p-6">
 				<div class="h-14 w-14 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl shadow-lg shadow-red-900/50">
-					💼
+					<img
+						src={careerIcon}
+						alt="Career"
+						class="h-8 w-8 object-contain"
+						loading="lazy"
+						decoding="async"
+					/>
 				</div>
 				<h3 class="text-xl font-bold mb-3">CV & Career Prep</h3>
 				<p class="text-white text-sm leading-relaxed">
@@ -177,6 +198,62 @@
 					remote roles.
 				</p>
 			</div>
+		</div>
+
+		<div class="mt-8 text-center text-xs text-gray-400 space-x-2">
+			<a
+				target="_blank"
+				rel="noopener noreferrer"
+				href="https://icons8.com/icon/HjX5BJw6tvqD/certificate"
+				class="underline hover:text-gray-200"
+			>
+				Certificate
+			</a>
+			<span>icon by</span>
+			<a
+				target="_blank"
+				rel="noopener noreferrer"
+				href="https://icons8.com"
+				class="underline hover:text-gray-200"
+			>
+				Icons8
+			</a>
+			<span class="mx-2">·</span>
+			<a
+				target="_blank"
+				rel="noopener noreferrer"
+				href="https://icons8.com/icon/L9KxyvpfmbOv/teacher"
+				class="underline hover:text-gray-200"
+			>
+				Mentor
+			</a>
+			<span>icon by</span>
+			<a
+				target="_blank"
+				rel="noopener noreferrer"
+				href="https://icons8.com"
+				class="underline hover:text-gray-200"
+			>
+				Icons8
+			</a>
+			<span class="mx-2">·</span>
+			<a
+				target="_blank"
+				rel="noopener noreferrer"
+				href="https://icons8.com/icon/39369/job-seeker"
+				class="underline hover:text-gray-200"
+			>
+				Career
+			</a>
+			<span>icon by</span>
+			<a
+				target="_blank"
+				rel="noopener noreferrer"
+				href="https://icons8.com"
+				class="underline hover:text-gray-200"
+			>
+				Icons8
+			</a>
 		</div>
 	</div>
 </section>
