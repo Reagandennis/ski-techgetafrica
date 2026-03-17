@@ -1,19 +1,13 @@
-import { createServerSupabaseClient } from '$lib/server/supabase';
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { getBlogPostBySlug } from '$lib/server/contentful';
 
-export const load: PageServerLoad = async ({ params, cookies }) => {
-	const supabase = createServerSupabaseClient(cookies);
+export const load: PageServerLoad = async ({ params }) => {
 	const { id } = params;
 
-	const { data: post, error: err } = await supabase
-		.from('blog_posts')
-		.select('*')
-		.eq('id', id)
-		.single();
+	const post = await getBlogPostBySlug(id);
 
-	if (err) {
-		console.error('Error loading blog post:', err);
+	if (!post) {
 		throw error(404, 'Blog post not found');
 	}
 
@@ -21,8 +15,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, cookies, params }) => {
-		const supabase = createServerSupabaseClient(cookies);
+	default: async ({ request, params }) => {
 		const { id } = params;
 		const form = await request.formData();
 
@@ -43,38 +36,6 @@ export const actions: Actions = {
 		if (!title || !slug || !excerpt || !content || !author_name || !cover_image || !category) {
 			return fail(400, {
 				error: 'Missing required fields.',
-			});
-		}
-
-		const { error: updateError } = await supabase
-			.from('blog_posts')
-			.update({
-				title,
-				slug,
-				excerpt,
-				content,
-				author_name,
-				author_image,
-				cover_image,
-				tags,
-				category,
-				seo_title,
-				seo_description,
-				published,
-                read_time,
-				updated_date: new Date().toISOString(),
-			})
-			.eq('id', id);
-
-		if (updateError) {
-			console.error('Error updating blog post:', updateError);
-			if (updateError.code === '23505') {
-				return fail(400, {
-					error: `The slug "${slug}" is already in use.`,
-				});
-			}
-			return fail(500, {
-				error: 'Failed to update blog post.',
 			});
 		}
 

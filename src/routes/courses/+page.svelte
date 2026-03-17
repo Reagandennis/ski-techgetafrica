@@ -323,23 +323,24 @@
 						<!-- Course Cards Grid -->
 						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
 							{#each paginatedCourses as course (course.id)}
-								<CourseCard
-									title={course.title}
-									organizationName={course.organizationName}
-									organizationLogo={course.organizationLogo}
-									certificationType={course.certificationType ?? course.certification_type}
-									rating={course.rating}
-									ratingCount={course.ratingCount ?? course.rating_count}
-									enrollmentCount={course.enrollmentCount ?? course.enrollment_count}
-									description={course.description}
-									imageUrl={course.imageUrl ?? course.image_url}
-									price={course.price}
-									originalPrice={course.originalPrice ?? course.original_price}
-									difficulty={course.difficulty}
-									duration={course.duration}
-									currency={course.currency ?? 'KES'}
-									href={`/courses/${course.slug}`}
-								/>
+								<a href={`/courses/${course.slug}`} class="block">
+									<CourseCard
+										title={course.title}
+										organizationName={course.organizationName}
+										organizationLogo={course.organizationLogo}
+										certificationType={course.certificationType ?? course.certification_type}
+										rating={course.rating}
+										ratingCount={course.ratingCount ?? course.rating_count}
+										enrollmentCount={course.enrollmentCount ?? course.enrollment_count}
+										description={course.description}
+										imageUrl={course.imageUrl ?? course.image_url}
+										price={course.price}
+										originalPrice={course.originalPrice ?? course.original_price}
+										difficulty={course.difficulty}
+										duration={course.duration}
+										currency={course.currency ?? 'KES'}
+									/>
+								</a>
 							{/each}
 						</div>
 

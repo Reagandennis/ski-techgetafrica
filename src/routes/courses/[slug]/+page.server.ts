@@ -1,31 +1,16 @@
-import { createServerSupabaseClient } from '$lib/server/supabase';
 import { flatCourses } from '$lib/data/courses';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { getCourseBySlug } from '$lib/server/contentful';
 
-export const load: PageServerLoad = async ({ params, cookies }) => {
-	const supabase = createServerSupabaseClient(cookies);
+export const load: PageServerLoad = async ({ params }) => {
 	const { slug } = params;
 
-	const { data: course, error: err } = await supabase
-		.from('courses')
-		.select('*')
-		.eq('slug', slug)
-		.single();
+	const course = await getCourseBySlug(slug);
 
 	if (course) {
 		return {
-			course: {
-				...course,
-				organizationName: course.organization_name ?? 'Techgetafrica',
-				organizationLogo: course.organization_logo,
-				imageUrl: course.image_url,
-				certificationType: course.certification_type,
-				originalPrice: course.original_price,
-				enrollmentCount: course.enrollment_count,
-				ratingCount: course.rating_count,
-				currency: course.currency ?? 'KES',
-			},
+			course,
 		};
 	}
 
@@ -35,6 +20,6 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 		return { course: fallbackCourse };
 	}
 
-	console.error(`Error loading course with slug "${slug}":`, err);
+	console.error(`Error loading course with slug "${slug}":`);
 	throw error(404, 'Course not found');
 };

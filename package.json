@@ -30,8 +30,6 @@
 	"dependencies": {
 		"@contentful/rich-text-html-renderer": "^17.1.6",
 		"@contentful/rich-text-types": "^17.2.5",
-		"@supabase/ssr": "^0.8.0",
-		"@supabase/supabase-js": "^2.88.0",
 		"contentful": "^11.10.5",
 		"lucide-svelte": "^0.562.0",
 		"resend": "^6.6.0"

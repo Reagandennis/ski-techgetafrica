@@ -1,19 +1,13 @@
-import { createServerSupabaseClient } from '$lib/server/supabase';
 import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { getCourseBySlug } from '$lib/server/contentful';
 
-export const load: PageServerLoad = async ({ params, cookies }) => {
-	const supabase = createServerSupabaseClient(cookies);
+export const load: PageServerLoad = async ({ params }) => {
 	const { id } = params;
 
-	const { data: course, error: err } = await supabase
-		.from('courses')
-		.select('*')
-		.eq('id', id)
-		.single();
+	const course = await getCourseBySlug(id);
 
-	if (err) {
-		console.error('Error loading course:', err);
+	if (!course) {
 		throw error(404, 'Course not found');
 	}
 
@@ -21,8 +15,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, cookies, params }) => {
-		const supabase = createServerSupabaseClient(cookies);
+	default: async ({ request, params }) => {
 		const form = await request.formData();
 		const id = params.id;
 
@@ -45,37 +38,6 @@ export const actions: Actions = {
 		if (!title || !slug || !organization_name || !certification_type || !difficulty || !duration || !image_url || !description) {
 			return fail(400, {
 				error: 'Missing required fields. Please fill out the form completely.',
-			});
-		}
-
-		const { error: updateError } = await supabase
-			.from('courses')
-			.update({
-				title,
-				slug,
-				organization_name,
-				organization_logo,
-				certification_type,
-				difficulty,
-				duration,
-				image_url,
-				price,
-				original_price,
-				description,
-				published,
-				currency: 'KES',
-			})
-			.eq('id', id);
-
-		if (updateError) {
-			console.error('Error updating course:', updateError);
-			if (updateError.code === '23505' && updateError.message.includes('courses_slug_key')) {
-				return fail(400, {
-					error: `The slug "${slug}" is already in use. Please choose a different one.`,
-				});
-			}
-			return fail(500, {
-				error: 'Failed to update course. Please try again later.',
 			});
 		}
 

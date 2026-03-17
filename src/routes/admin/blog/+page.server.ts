@@ -1,17 +1,10 @@
-import { createServerSupabaseClient } from '$lib/server/supabase';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { getBlogPosts } from '$lib/server/contentful';
 
-export const load: PageServerLoad = async ({ cookies }) => {
-	const supabase = createServerSupabaseClient(cookies);
-
+export const load: PageServerLoad = async () => {
 	try {
-		const { data: posts, error } = await supabase
-			.from('blog_posts')
-			.select('id, title, slug, category, published, published_date, author_name')
-			.order('published_date', { ascending: false });
-
-		if (error) throw error;
+		const posts = await getBlogPosts();
 
 		return {
 			posts: posts ?? [],
@@ -26,21 +19,13 @@ export const load: PageServerLoad = async ({ cookies }) => {
 };
 
 export const actions: Actions = {
-	delete: async ({ request, cookies }) => {
-		const supabase = createServerSupabaseClient(cookies);
+	delete: async ({ request }) => {
 		const form = await request.formData();
 		const id = form.get('id');
 
 		if (typeof id !== 'string' || !id) {
 			return fail(400, { message: 'Invalid post id' });
 		}
-
-		const { error } = await supabase.from('blog_posts').delete().eq('id', id);
- 
- 		if (error) {
- 			console.error('Delete blog post error:', error);
- 			return fail(500, { message: 'Failed to delete blog post' });
- 		}
 
  		throw redirect(303, '/admin/blog');
  	}

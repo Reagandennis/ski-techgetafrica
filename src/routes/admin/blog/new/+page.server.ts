@@ -1,19 +1,7 @@
-import { createServerSupabaseClient } from '$lib/server/supabase';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const actions: Actions = {
-	default: async ({ request, cookies }) => {
-		const supabase = createServerSupabaseClient(cookies);
-
-		const {
-			data: { user }
-		} = await supabase.auth.getUser();
-
-		if (!user) {
-			return fail(401, {
-				error: 'You must be logged in to create a blog post.'
-			});
-		}
+	default: async ({ request }) => {
 
 		const form = await request.formData();
 
@@ -34,40 +22,6 @@ export const actions: Actions = {
 		if (!title || !slug || !excerpt || !content || !author_name || !cover_image || !category) {
 			return fail(400, {
 				error: 'Missing required fields.',
-				data: Object.fromEntries(form.entries())
-			});
-		}
-
-		const { error } = await supabase.from('blog_posts').insert([
-			{
-				title,
-				slug,
-				excerpt,
-				content,
-				author_id: user.id,
-				author_name,
-				author_image,
-				cover_image,
-				tags,
-				category,
-				seo_title,
-				seo_description,
-				published,
-                read_time,
-				published_date: published ? new Date().toISOString() : null
-			}
-		]);
-
-		if (error) {
-			console.error('Error creating blog post:', error);
-			if (error.code === '23505') {
-				return fail(400, {
-					error: `The slug "${slug}" is already in use.`,
-					data: Object.fromEntries(form.entries())
-				});
-			}
-			return fail(500, {
-				error: 'Failed to create blog post.',
 				data: Object.fromEntries(form.entries())
 			});
 		}
