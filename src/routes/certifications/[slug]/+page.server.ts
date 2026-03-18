@@ -1,4 +1,5 @@
 import type { PageServerLoad } from './$types';
+import { getCourses } from '$lib/server/contentful';
 
 const roadmaps = [
 	{
@@ -331,7 +332,10 @@ export const load: PageServerLoad = async ({ params }) => {
 		throw new Error('Roadmap not found');
 	}
 
+	const courses = await getCourses();
+
 	return {
-		roadmap
+		roadmap,
+		courses: courses || []
 	};
 };

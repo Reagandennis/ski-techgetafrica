@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Hero from '$lib/components/Hero.svelte';
-	import { flatCourses } from '$lib/data/courses';
+	import type { PageData } from './$types';
 	import certificateIcon from '$lib/assets/Certificate.png';
 	import mentorIcon from '$lib/assets/mentor.png';
 	import careerIcon from '$lib/assets/career.png';
@@ -10,6 +10,9 @@
 	import informationTechnologyIcon from '$lib/assets/IT.png';
 	import cybersecurityIcon from '$lib/assets/cybersecurity.png';
 	import aiMlIcon from '$lib/assets/machine_learning.png';
+
+	export let data: PageData;
+	const flatCourses = data.courses || [];
 
 	// Mock data - will be replaced with API calls
 	const roadmaps = [

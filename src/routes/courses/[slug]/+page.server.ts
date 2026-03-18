@@ -1,4 +1,3 @@
-import { flatCourses } from '$lib/data/courses';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { getCourseBySlug } from '$lib/server/contentful';
@@ -14,12 +13,6 @@ export const load: PageServerLoad = async ({ params }) => {
 		};
 	}
 
-	const fallbackCourse = flatCourses.find((c) => c.slug === slug);
-
-	if (fallbackCourse) {
-		return { course: fallbackCourse };
-	}
-
-	console.error(`Error loading course with slug "${slug}":`);
+	console.error(`Error loading course with slug "${slug}": Not found in Contentful`);
 	throw error(404, 'Course not found');
 };

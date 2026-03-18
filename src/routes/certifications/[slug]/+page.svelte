@@ -1,14 +1,13 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { formatCurrency } from '$lib/utils/format';
-	import { flatCourses as courses } from '$lib/data/courses';
-
 	export let data: PageData;
 
 	$: roadmap = data.roadmap;
+	$: courses = data.courses;
 
 	// Get related courses for certifications mentioned in the roadmap
-	$: relatedCourses = roadmap ? courses.filter(course =>
+	$: relatedCourses = roadmap && courses ? courses.filter(course =>
 		roadmap.phases.some(phase =>
 			phase.certifications.some(cert =>
 				course.title.toLowerCase().includes(cert.name.toLowerCase().split(' ').slice(0, 2).join(' '))
